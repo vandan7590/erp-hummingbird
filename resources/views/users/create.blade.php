@@ -58,6 +58,15 @@
                                         {!! Form::select('roles[]', $roles, [], ['class' => 'form-control', 'multiple']) !!}
                                     </div>
                                 </div>
+                                <div class="mb-3">
+                                    <div class="radio-button-group">
+                                        {!! Form::radio('enabled', 1, '', ['id' => 'enabled-yes']) !!}
+                                        <label for="enabled-yes">Enabled</label> &nbsp;
+
+                                        {!! Form::radio('enabled', 0, '', ['id' => 'enabled-no']) !!}
+                                        <label for="enabled-no">Disabled</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

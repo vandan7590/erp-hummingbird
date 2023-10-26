@@ -82,6 +82,13 @@
                                             {{ __('Login') }}
                                         </button>
                                     </form>
+                                    @if (Route::has('password.request'))
+                                        <div class="mt-3 text-center">
+
+                                            <a href="{{ route('password.request') }}" class="text-muted"><u>Forgot
+                                                    Password?</u></a>
+                                        </div>
+                                    @endif
                                     <hr>
                                     @if (session('error'))
                                         <div class="alert alert-danger">
