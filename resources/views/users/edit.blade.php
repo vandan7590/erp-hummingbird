@@ -11,6 +11,11 @@
                 </ul>
             </div>
         @endif
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         {!! Form::model($user, ['method' => 'PATCH', 'route' => ['users.update', $user->id]]) !!}
         <div class="row">
             <div class="col-12">
@@ -41,20 +46,15 @@
                                 </div>
                                 <div class="mb-3">
                                     <div class="form-group">
-                                        <strong>Password:</strong>
-                                        {!! Form::password('password', ['placeholder' => 'Password', 'class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <div class="form-group">
-                                        <strong>Confirm Password:</strong>
-                                        {!! Form::password('confirm-password', ['placeholder' => 'Confirm Password', 'class' => 'form-control']) !!}
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <div class="form-group">
                                         <strong>Role:</strong>
                                         {!! Form::select('roles[]', $roles, $userRole, ['class' => 'form-control', 'multiple']) !!}
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-group">
+                                        <a href="{{ route('change-password-view', $user->id) }}"
+                                            class="btn btn-sm btn-primary"> Change
+                                            Password</a>
                                     </div>
                                 </div>
                             </div>
@@ -64,6 +64,6 @@
             </div>
         </div>
         {!! Form::close() !!}
-
     </div>
+
 @endsection

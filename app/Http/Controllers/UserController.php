@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use DB;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -84,16 +84,11 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
     
         $input = $request->all();
-        if(!empty($input['password'])){ 
-            $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = Arr::except($input,array('password'));    
-        }
+        // $input = Arr::except($input,array('password'));    
     
         $user = User::find($id);
         $user->update($input);
@@ -113,5 +108,34 @@ class UserController extends Controller
         User::find($id)->delete();
         return redirect()->route('users.index')
                         ->with('success','User deleted successfully');
+    }
+
+    public function password_change_index($id)
+    {
+        $user = User::find($id);
+        return view('users.change_password',compact('user'));
+    }
+
+    public function password_change(Request $request, $id)
+    {
+        $this->validate($request, [
+            'current_password' => 'required',
+            'password' => 'required|confirmed',
+        ]);
+        
+        $user = User::find($request->id);
+
+        if (!(Hash::check($request->get('current_password'), $user->password))) {
+            return redirect()->back()->with("error","Your current password does not matches with the password.");
+        }
+        
+        if(Hash::check($request->password, $user->password)){
+            return redirect()->back()->with("error", "New Password cannot be same as your current password.");
+        }
+
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return redirect()->route('users.edit',['user' => $user->id])->with('success','Password changed successfully.');
     }
 }

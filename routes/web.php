@@ -27,11 +27,13 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/', [HomeController::class, 'index'])->name('home');
-    Route::resource('roles', RoleController::class);
-    Route::resource('users', UserController::class);
+    Route::resource('pages/roles', RoleController::class);
+    Route::resource('pages/users', UserController::class);
+    Route::get('pages/users/change-password/{id}',[UserController::class, 'password_change_index'])->name('change-password-view');
+    Route::post('pages/users/change-password/{id}',[UserController::class, 'password_change'])->name('change-password');
 
-    Route::get('settings/email-config', [SettingsController::class, 'email_config'])->name('setting-email-config');
-    Route::post('settings/send-env-update', [SettingsController::class, 'send_env_update'])->name('setting-env-update-send');
-    Route::get('settings/email-test', [SettingsController::class, 'email_test'])->name('setting-email-test');
-    Route::post('settings/send-email', [SettingsController::class, 'send_email_test'])->name('setting-send-email');
+    Route::get('configuration/email-config', [SettingsController::class, 'email_config'])->name('setting-email-config');
+    Route::post('configuration/send-env-update', [SettingsController::class, 'send_env_update'])->name('setting-env-update-send');
+    Route::get('configuration/email-test', [SettingsController::class, 'email_test'])->name('setting-email-test');
+    Route::post('configuration/send-email', [SettingsController::class, 'send_email_test'])->name('setting-send-email');
 });
