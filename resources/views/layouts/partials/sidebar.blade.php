@@ -58,12 +58,14 @@
             <span>Setup</span>
         </a>
         <div id="collapseConfigs"
-            class="collapse {{ request()->is('configuration/email-config*') || request()->is('configuration/email-test*') ? 'show' : '' }}"
+            class="collapse {{ request()->is('configuration*') || request()->is('configuration/email-test*') ? 'show' : '' }}"
             aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Site Info</h6>
                 <a class="collapse-item {{ request()->is('configuration/email-config*') ? 'active' : '' }}"
                     href="{{ route('setting-email-config') }}">Env Configuration</a>
+                <a class="collapse-item {{ request()->is('configuration/db-config*') ? 'active' : '' }}"
+                    href="{{ route('setting-db-config') }}">Database Configuration</a>
                 <a class="collapse-item {{ request()->is('configuration/email-test*') ? 'active' : '' }}"
                     href="{{ route('setting-email-test') }}">Email Testing</a>
             </div>

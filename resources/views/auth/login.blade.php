@@ -83,6 +83,13 @@
                                         </button>
                                     </form>
                                     <hr>
+                                    @if (session('error'))
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                {{ session('error') }}
+                                            </ul>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

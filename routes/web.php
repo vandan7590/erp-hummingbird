@@ -32,8 +32,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('pages/users/change-password/{id}',[UserController::class, 'password_change_index'])->name('change-password-view');
     Route::post('pages/users/change-password/{id}',[UserController::class, 'password_change'])->name('change-password');
 
-    Route::get('configuration/email-config', [SettingsController::class, 'email_config'])->name('setting-email-config');
+    Route::get('configuration/email-config', [SettingsController::class, 'email_config'])->name('setting-email-config');    
     Route::post('configuration/send-env-update', [SettingsController::class, 'send_env_update'])->name('setting-env-update-send');
+    Route::get('configuration/db-config', [SettingsController::class, 'db_config'])->name('setting-db-config');
+    Route::post('configuration/send-db-update', [SettingsController::class, 'send_db_update'])->name('setting-db-update-send');
     Route::get('configuration/email-test', [SettingsController::class, 'email_test'])->name('setting-email-test');
     Route::post('configuration/send-email', [SettingsController::class, 'send_email_test'])->name('setting-send-email');
 });

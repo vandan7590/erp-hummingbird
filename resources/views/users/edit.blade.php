@@ -1,4 +1,22 @@
 @extends('layouts.master')
+@section('custom-css')
+    <style>
+        .radio-button-group input[type="radio"] {
+            transform: scale(-1.5);
+            /* Increase the size of the radio buttons */
+        }
+
+        .radio-button-group label {
+            font-weight: bolder;
+            font-size: 1rem;
+            color: #858796;
+            /* Adjust the label font size */
+            margin-left: 5px;
+            margin-right: 10px;
+            /* Add some space between the radio button and the label */
+        }
+    </style>
+@endsection
 @section('content')
     <div class="container-xl px-4 mt-n10">
         @if (count($errors) > 0)
@@ -48,6 +66,15 @@
                                     <div class="form-group">
                                         <strong>Role:</strong>
                                         {!! Form::select('roles[]', $roles, $userRole, ['class' => 'form-control', 'multiple']) !!}
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="radio-button-group">
+                                        {!! Form::radio('enabled', 1, $user->enabled, ['id' => 'enabled-yes']) !!}
+                                        <label for="enabled-yes">Enabled</label> &nbsp;
+
+                                        {!! Form::radio('enabled', 0, !$user->enabled, ['id' => 'enabled-no']) !!}
+                                        <label for="enabled-no">Disabled</label>
                                     </div>
                                 </div>
                                 <div class="mb-3">
