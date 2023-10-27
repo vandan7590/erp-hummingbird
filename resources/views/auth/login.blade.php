@@ -7,8 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>Cybernetworks - Login</title>
+    <?php $siteInfo = \App\Models\SiteInfo::first(); ?>
+    @if ($siteInfo)
+        <link rel="icon" href="{{ asset('site_info/' . $siteInfo->favicon_icon) }}" type="image/x-icon">
+    @endif
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -20,7 +23,7 @@
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <style>
         .bg-login-image1 {
-            background: url("img/Logo.png");
+            background: url("{{ asset('site_info/' . $siteInfo->login_image) }}");
             background-position: center;
             background-size: 500px 600px;
         }

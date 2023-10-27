@@ -7,6 +7,7 @@ use Artisan;
 use Illuminate\Support\Env;
 use Dotenv\Dotenv;
 use Mail;
+use App\Models\SiteInfo;
 
 class SettingsController extends Controller
 {
@@ -50,10 +51,25 @@ class SettingsController extends Controller
         $subject = $request->input('subject');
         $message = $request->input('message');
 
-        Mail::send('settings.email_view', ['messages' => $message], function ($mail) use ($email,$subject) {
+        if ($request->hasFile('attachment')) {
+            $attachment = $request->file('attachment');
+            $attachmentPath = $attachment->store('attachments');
+        } else {
+            $attachmentPath = null;
+        }
+
+        Mail::send('settings.email_view', ['messages' => $message], function ($mail) use ($email,$subject, $attachmentPath) {
             $mail->from('no-reply@cybernetworks.net.au', 'Cybernetworks');
             $mail->to($email)->subject($subject);
+
+            if ($attachmentPath) {
+                $mail->attach(storage_path('app/' . $attachmentPath));
+            }
         });
+
+        if ($attachmentPath) {
+            unlink(storage_path('app/' . $attachmentPath));
+        }        
 
         return back();
     }
@@ -85,5 +101,59 @@ class SettingsController extends Controller
         Artisan::call("route:clear");
 
         return back();
+    }
+
+    public function site_info_index()
+    {
+        $siteInfo = SiteInfo::first();
+        return view('settings.site_info',compact('siteInfo'));
+    }
+
+    public function site_info_store(Request $request)
+    {
+        if ($request->site_id) {
+            $siteInfo = SiteInfo::find($request->site_id);
+
+            if (request()->hasFile('favicon_icon')) {
+                $favicon_file = $request->file('favicon_icon');
+                $favicon_fileName = time() . '_' . $favicon_file->getClientOriginalName();
+                $favicon_filePath = $favicon_file->move(public_path('site_info'), $favicon_fileName);
+                $siteInfo->favicon_icon = $favicon_fileName;
+            }
+            if (request()->hasFile('login_image')) {
+                $login_file = $request->file('login_image');
+                $login_fileName = time() . '_' . $login_file->getClientOriginalName();
+                $login_filePath = $login_file->move(public_path('site_info'), $login_fileName);
+                $siteInfo->login_image = $login_fileName;
+            }
+
+            $siteInfo->site_name = $request->site_name ?? '';
+            $siteInfo->site_desc = $request->site_desc ?? '';
+            $siteInfo->site_meta_tags = $request->site_meta_tags ?? '';
+            $siteInfo->save();
+        } else {
+            $favicon_fileName = null;
+            $login_fileName = null;
+            if (request()->hasFile('favicon_icon')) {
+                $favicon_file = $request->file('favicon_icon');
+                $favicon_fileName = time() . '_' . $favicon_file->getClientOriginalName();
+                $favicon_filePath = $favicon_file->move(public_path('site_info'), $favicon_fileName);
+            }
+            if (request()->hasFile('login_image')) {
+                $login_file = $request->file('login_image');
+                $login_fileName = time() . '_' . $login_file->getClientOriginalName();
+                $login_filePath = $login_file->move(public_path('site_info'), $login_fileName);
+            }
+
+            $siteInfo = new SiteInfo();
+            $siteInfo->favicon_icon = $favicon_fileName;
+            $siteInfo->login_image = $login_fileName;
+            $siteInfo->site_name = $request->site_name ?? '';
+            $siteInfo->site_desc = $request->site_desc ?? '';
+            $siteInfo->site_meta_tags = $request->site_meta_tags ?? '';
+            $siteInfo->save();
+        }
+
+        return redirect()->back()->with("success", "Site Info Updated Successfully.");
     }
 }

@@ -80,8 +80,8 @@
                                 <div class="mb-3">
                                     <div class="form-group">
                                         <a href="{{ route('change-password-view', $user->id) }}"
-                                            class="btn btn-sm btn-primary"> Change
-                                            Password</a>
+                                            class="btn btn-sm btn-primary"> Change Password
+                                        </a>
                                     </div>
                                 </div>
                             </div>

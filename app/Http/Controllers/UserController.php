@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Mail;
 
 class UserController extends Controller
 {
@@ -49,8 +50,15 @@ class UserController extends Controller
         $input['password'] = Hash::make($input['password']);
     
         $user = User::create($input);
+        $email = $input['email'];
+        $name = $input['name'];
         $user->assignRole($request->input('roles'));
-    
+        
+        Mail::send('settings.welcome_email', ['name' => $name], function ($mail) use ($email) {
+            $mail->from('no-reply@cybernetworks.net.au', 'Cybernetworks');
+            $mail->to($email);
+        });
+
         return redirect()->route('users.index')
                         ->with('success','User created successfully');
     }

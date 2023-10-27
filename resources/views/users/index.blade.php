@@ -53,6 +53,13 @@
                                         {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id], 'style' => 'display:inline']) !!}
                                         {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-danger']) !!}
                                         {!! Form::close() !!}
+                                        <form method="POST" action="{{ route('password.email') }}" style="display: inline">
+                                            @csrf
+                                            <input type="hidden" name="email" value="{{ $user->email }}">
+                                            <button type="submit" class="btn btn-sm btn-primary">
+                                                Reset Password Link
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

@@ -1,8 +1,9 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
+    <?php $siteInfo = \App\Models\SiteInfo::first(); ?>
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-text mx-3">Cybernetworks</div>
+        <div class="sidebar-brand-text mx-3">{{ $siteInfo->site_name ?? '' }}</div>
     </a>
 
     <!-- Divider -->
@@ -70,6 +71,13 @@
                     href="{{ route('setting-email-test') }}">Email Testing</a>
             </div>
         </div>
+    </li>
+
+    <li class="nav-item active">
+        <a class="nav-link {{ request()->is('settings*') ? 'active' : '' }}"
+            href="{{ route('setting-site-info-index') }}">
+            <i class="fa fa-cog"></i>
+            <span>Settings</span></a>
     </li>
 
     <!-- Divider -->

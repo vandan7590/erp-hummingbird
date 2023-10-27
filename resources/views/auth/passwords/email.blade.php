@@ -7,9 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>Cybernetworks - Forgot Password</title>
 
+    <?php $siteInfo = \App\Models\SiteInfo::first(); ?>
+    @if ($siteInfo)
+        <link rel="icon" href="{{ asset('site_info/' . $siteInfo->favicon_icon) }}" type="image/x-icon">
+    @endif
     <!-- Custom fonts for this template-->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link

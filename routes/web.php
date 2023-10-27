@@ -38,4 +38,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('configuration/send-db-update', [SettingsController::class, 'send_db_update'])->name('setting-db-update-send');
     Route::get('configuration/email-test', [SettingsController::class, 'email_test'])->name('setting-email-test');
     Route::post('configuration/send-email', [SettingsController::class, 'send_email_test'])->name('setting-send-email');
+    Route::get('settings/site-info', [SettingsController::class, 'site_info_index'])->name('setting-site-info-index');
+    Route::post('settings/site-info-store', [SettingsController::class, 'site_info_store'])->name('setting-site-info-store');
 });
