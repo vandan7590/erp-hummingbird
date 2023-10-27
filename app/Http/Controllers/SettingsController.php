@@ -132,8 +132,6 @@ class SettingsController extends Controller
             $siteInfo->site_meta_tags = $request->site_meta_tags ?? '';
             $siteInfo->save();
         } else {
-            $favicon_fileName = null;
-            $login_fileName = null;
             if (request()->hasFile('favicon_icon')) {
                 $favicon_file = $request->file('favicon_icon');
                 $favicon_fileName = time() . '_' . $favicon_file->getClientOriginalName();
