@@ -10,7 +10,7 @@
     <title>Cybernetworks</title>
     <?php $siteInfo = \App\Models\SiteInfo::first(); ?>
     @if ($siteInfo)
-        <link rel="icon" href="{{ asset('site_info/' . $siteInfo->favicon_icon) }}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('site_info/' . $siteInfo->favicon_icon ?? '') }}" type="image/x-icon">
     @endif
 
     <!-- Custom fonts for this template-->
