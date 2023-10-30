@@ -21,7 +21,7 @@ class UserController extends Controller
     {
         $data = User::latest()->paginate(5);
   
-        return view('users.index',compact('data'))
+        return view('pages.users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
@@ -31,7 +31,7 @@ class UserController extends Controller
     public function create(): View
     {
         $roles = Role::pluck('name','name')->all();
-        return view('users.create',compact('roles'));
+        return view('pages.users.create',compact('roles'));
     }
 
     /**
@@ -69,7 +69,7 @@ class UserController extends Controller
     public function show(string $id): View
     {
         $user = User::find($id);
-        return view('users.show',compact('user'));
+        return view('pages.users.show',compact('user'));
     }
 
     /**
@@ -81,7 +81,7 @@ class UserController extends Controller
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
     
-        return view('users.edit',compact('user','roles','userRole'));
+        return view('pages.users.edit',compact('user','roles','userRole'));
     }
 
     /**
@@ -121,7 +121,7 @@ class UserController extends Controller
     public function password_change_index($id)
     {
         $user = User::find($id);
-        return view('users.change_password',compact('user'));
+        return view('pages.users.change_password',compact('user'));
     }
 
     public function password_change(Request $request, $id)
