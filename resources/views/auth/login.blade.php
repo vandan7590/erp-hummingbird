@@ -21,13 +21,15 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
-    <style>
-        .bg-login-image1 {
-            background: url("{{ asset('site_info/' . $siteInfo->login_image ?? '') }}");
-            background-position: center;
-            background-size: 500px 600px;
-        }
-    </style>
+    @if ($siteInfo)
+        <style>
+            .bg-login-image1 {
+                background: url("{{ asset('site_info/' . $siteInfo->login_image ?? '') }}");
+                background-position: center;
+                background-size: 500px 600px;
+            }
+        </style>
+    @endif
 </head>
 
 <body class="bg-gradient-primary">
