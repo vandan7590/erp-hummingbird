@@ -44,6 +44,12 @@
             </div>
         </div>
     </li>
+    <li class="nav-item active">
+        <a class="nav-link {{ request()->is('suppliers*') ? 'active' : '' }}"
+            href="{{ route('supplier-index') }}">
+            <i class="fas fa-industry"></i>
+            <span>Suppliers</span></a>
+    </li>
 
     <!-- Heading -->
     <div class="sidebar-heading">

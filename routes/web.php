@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\SupplierController;
 
 
 /*
@@ -18,9 +19,6 @@ use App\Http\Controllers\SettingsController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 Auth::routes();
 
@@ -41,4 +39,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('configuration/send-email', [SettingsController::class, 'send_email_test'])->name('setting-send-email');
     Route::get('settings/site-info', [SettingsController::class, 'site_info_index'])->name('setting-site-info-index');
     Route::post('settings/site-info-store', [SettingsController::class, 'site_info_store'])->name('setting-site-info-store');
+
+    //Supplier Module
+    Route::get('suppliers',[SupplierController::class, 'index'])->name('supplier-index');
+    Route::get('supplier/{id}',[SupplierController::class,'supplier_manage'])->name('supplier-manage');
+    Route::post('suppliers',[SupplierController::class, 'store'])->name('supplier-store');
+    Route::delete('supplier/{id}',[SupplierController::class, 'destroy'])->name('supplier-destroy');
 });
